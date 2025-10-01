@@ -1,0 +1,7 @@
+{
+  "manifest_version": 3,
+  "name": "Solo AI",
+  "version": "0.0.1",
+  "description": "Personal assistant for highlighted text.",
+  "action": { "default_popup": "popup.html" }
+}
