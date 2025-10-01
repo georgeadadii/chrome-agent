@@ -1,9 +1,29 @@
 <!doctype html>
 <html>
-  <head><meta charset="utf-8"><title>Solo AI</title></head>
-  <body>
-    <h3>Solo AI</h3>
-    <p>In progres</p>
+  <head>
+    <meta charset="utf-8" />
+    <title>Solo AI</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="solo-body">
+    <header class="solo-header">
+      <strong>Solo AI</strong>
+    </header>
+
+    <textarea id="input" placeholder="Paste text here..."></textarea>
+
+    <div class="solo-row">
+      <select id="action">
+        <option value="summarise">Summarise</option>
+        <option value="tone_change">Tone change (professional)</option>
+        <option value="key_points">Key points</option>
+      </select>
+      <div class="solo-row-gap"></div>
+      <button id="run" class="solo-btn primary">Run</button>
+    </div>
+
+    <div id="output" class="solo-output"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>
