@@ -8,9 +8,10 @@
   <body class="solo-body">
     <header class="solo-header">
       <strong>Solo AI</strong>
+      <button id="open-options" class="solo-btn secondary" title="Settings">Settings</button>
     </header>
 
-    <textarea id="input" placeholder="Paste text here..."></textarea>
+    <textarea id="input" placeholder="Paste text here or use 'Grab selection'"></textarea>
 
     <div class="solo-row">
       <select id="action">
@@ -19,10 +20,11 @@
         <option value="key_points">Key points</option>
       </select>
       <div class="solo-row-gap"></div>
+      <button id="grab" class="solo-btn">Grab selection</button>
       <button id="run" class="solo-btn primary">Run</button>
     </div>
 
-    <div id="output" class="solo-output"></div>
+    <div id="output" class="solo-output" aria-live="polite"></div>
 
     <script src="popup.js"></script>
   </body>

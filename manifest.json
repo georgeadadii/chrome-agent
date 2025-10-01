@@ -2,16 +2,21 @@
   "manifest_version": 3,
   "name": "Solo AI",
   "version": "0.1.0",
-  "description": "Highlight → Summarise / Tone change / Key points.",
+  "description": "Highlight → Summarise / Tone change / Key points. Fast and simple.",
   "permissions": ["contextMenus", "storage", "scripting", "activeTab", "tabs"],
-  "background": { "service_worker": "background.js" },
-  "action": { "default_popup": "popup.html" },
+  "host_permissions": ["https://api.openai.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
-  ],
-  "options_page": "options.html"
+  ]
 }
