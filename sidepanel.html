@@ -3,166 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Solo AI Chat</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --fg: #e2e8f0;
-      --muted: #94a3b8;
-      --bubble-ai: #1f2937;
-      --bubble-user: #e5e7eb;
-      --bubble-user-fg: #0f172a;
-      --accent: #4f46e5;
-      --error: #ef4444;
-      --border: #233046;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    }
-
-    #container {
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    #chat-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: #1e293b;
-      flex-shrink: 0;
-    }
-
-    #chat-header strong {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--fg);
-    }
-
-    #settings-btn {
-      cursor: pointer;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #1f2937;
-      color: var(--fg);
-      font-size: 12px;
-      font-weight: 500;
-      transition: background 0.2s ease;
-    }
-    #settings-btn:hover { background: #374151; }
-
-    #chat-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .message {
-      max-width: 85%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .ai-message {
-      align-self: flex-start;
-      background: var(--bubble-ai);
-      color: var(--fg);
-      border: 1px solid var(--border);
-    }
-
-    .user-message {
-      align-self: flex-end;
-      background: var(--bubble-user);
-      color: var(--bubble-user-fg);
-      border: 1px solid #cbd5e1;
-    }
-
-    .ai-message.error {
-      border-color: var(--error);
-      color: #fecaca;
-    }
-
-    #input-area {
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-soft);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    #user-input {
-      width: 100%;
-      min-height: 64px;
-      resize: vertical;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #0b1220;
-      color: var(--fg);
-      padding: 8px;
-      font-family: inherit;
-      box-sizing: border-box;
-    }
-
-    #actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .btn {
-      cursor: pointer;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #1f2937;
-      color: var(--fg);
-      font-size: 13px;
-      font-weight: 500;
-      transition: background 0.2s ease;
-    }
-
-    .btn:hover { background: #374151; }
-
-    .btn.primary { background: var(--accent); border-color: var(--accent); }
-    .btn.primary:hover { background: #4338ca; }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div id="container">
-    <div id="chat-header">
+<body class="solo-body solo-chat-body">
+  <div id="container" class="chat-container">
+    <header id="chat-header" class="chat-header">
       <strong>Solo AI Chat</strong>
-      <button id="settings-btn" title="Settings">Settings</button>
-    </div>
-    <div id="chat-area" aria-live="polite"></div>
-    <div id="input-area">
-      <textarea id="user-input" placeholder="Paste or type text here..."></textarea>
-      <div id="actions">
+      <button id="settings-btn" class="btn" title="Settings">Settings</button>
+    </header>
+    <main id="chat-area" class="chat-area" aria-live="polite"></main>
+    <footer id="input-area" class="chat-input">
+      <textarea id="user-input" class="input" placeholder="Paste or type text here..."></textarea>
+      <div id="actions" class="actions-grid">
         <button class="btn" data-action="summarise">Summarise</button>
         <button class="btn" data-action="tone_change">Tone Change</button>
         <button class="btn" data-action="key_points">Key Points</button>
-        <button class="btn primary" data-action="create_notes">Create Notes</button>
+        <button class="btn btn-primary" data-action="create_notes">Create Notes</button>
       </div>
-    </div>
+    </footer>
   </div>
 
   <script src="sidepanel.js"></script>
