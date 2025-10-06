@@ -50,26 +50,26 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     const apiKey = await getApiKey();
     if (!apiKey) {
       // Send error to side panel
-      chrome.runtime.sendMessage({ 
-        type: "SOLO_ERROR", 
-        message: "Add your API key in Solo AI → Options." 
+      chrome.runtime.sendMessage({
+        type: "SOLO_ERROR",
+        message: "Add your API key in Solo AI → Options."
       });
       return;
     }
     const prompt = buildPrompt(action, text);
     const output = await callOpenAI(apiKey, MODEL, prompt);
-    
+
     // Send result to side panel
-    chrome.runtime.sendMessage({ 
-      type: "SOLO_RESULT", 
-      action, 
-      input: text, 
-      output 
+    chrome.runtime.sendMessage({
+      type: "SOLO_RESULT",
+      action,
+      input: text,
+      output
     });
   } catch (err) {
-    chrome.runtime.sendMessage({ 
-      type: "SOLO_ERROR", 
-      message: String(err && err.message || err) 
+    chrome.runtime.sendMessage({
+      type: "SOLO_ERROR",
+      message: String(err && err.message || err)
     });
   }
 });
@@ -105,17 +105,49 @@ function getApiKey() {
 }
 
 function buildPrompt(action, text) {
-  const header = "You are a precise, concise writing assistant. Prefer short, scannable output.";
+  const header = `
+You are SOLO — a precise, concise writing assistant embedded in a Chrome extension.
+Your style: clear, factual, minimal fluff. 
+Always format outputs in clean Markdown (use bullet points, bold key terms, short sentences).
+Prefer readable spacing and visually distinct sections.`;
+
   if (action === "summarise") {
-    return header + "\n\nSummarise the following in however many bullet points you deem important. Keep key facts and numbers.\n\nText:\n" + text;
+    return `${header}
+      **Task:** Summarise the following text clearly and objectively.
+      - Capture only the most important points, facts, and numbers.
+      - Group related ideas under brief, bold headings.
+      - Aim for 8–12 concise bullet points (or fewer if the text is short).
+      - Avoid repetition or unnecessary phrasing.
+      **Text to Summarise:**
+      ${text}`;
   }
+
   if (action === "tone_change") {
-    return header + "\n\nRewrite the text in a professional, concise tone. Preserve meaning and facts.\n\nText:\n" + text;
+    return `${header}
+      **Task:** Rewrite the text in a **professional, confident, and concise** tone.
+      - Preserve the original meaning, facts, and structure.
+      - Remove redundancy and filler words.
+      - Maintain a natural, human flow — not robotic.
+      - Format the output in clean Markdown with short paragraphs.
+      **Text to Rewrite:**
+      ${text}`;
   }
+
   if (action === "key_points") {
-    return header + "\n\nExtract key bullet points (max 2 sentence each).\n\nText:\n" + text;
+    return `${header}
+      **Task:** Extract the key insights and facts as bullet points.
+      - Each point should be **1–2 sentences max**.
+      - Use bold to highlight key terms or concepts.
+      - Exclude trivial or repetitive information.
+      - Maintain a neutral and factual tone.
+      **Text to Analyse:**
+      ${text}`;
   }
-  return header + "\n\nOperate on this text:\n" + text;
+
+  return `${header}
+    **Task:** Operate intelligently on the provided text based on user intent.
+    **Text:**
+    ${text}`;
 }
 
 async function callOpenAI(apiKey, model, prompt) {
