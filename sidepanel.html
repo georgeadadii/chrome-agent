@@ -9,16 +9,29 @@
   <div id="container" class="chat-container">
     <header id="chat-header" class="chat-header">
       <strong>Solo AI Chat</strong>
-      <button id="settings-btn" class="btn" title="Settings">Settings</button>
-    </header>
+      <button id="settings-btn" title="Settings" class="icon-btn">
+        <img src="../icons/settings.svg" alt="Settings" class="w-5 h-5" width="20" height="20" />
+      </button>
+                </header>
     <main id="chat-area" class="chat-area" aria-live="polite"></main>
     <footer id="input-area" class="chat-input">
-      <textarea id="user-input" class="input" placeholder="Paste or type text here..."></textarea>
-      <div id="actions" class="actions-grid">
-        <button class="btn" data-action="summarise">Summarise</button>
-        <button class="btn" data-action="tone_change">Tone Change</button>
-        <button class="btn" data-action="key_points">Key Points</button>
-        <button class="btn btn-primary" data-action="create_notes">Create Notes</button>
+      <div class="input-row">
+        <textarea id="user-input" class="input" placeholder="Type a prompt and press Enter…"></textarea>
+        <div class="dropdown">
+          <button id="preset-btn" class="icon-btn" title="Options" aria-haspopup="true" aria-expanded="false" aria-controls="preset-menu">
+            <img src="../icons/options.svg" alt="Options" width="20" height="20" />
+          </button>
+          <div id="preset-menu" class="dropdown-menu" role="menu" hidden>
+            <button class="dropdown-item" data-action="summarise" role="menuitem">Summarise</button>
+            <button class="dropdown-item" data-action="tone_change" role="menuitem">Tone Change</button>
+            <button class="dropdown-item" data-action="key_points" role="menuitem">Key Points</button>
+            <button class="dropdown-item" data-action="create_notes" role="menuitem">Create Notes</button>
+            <button class="dropdown-item" data-action="remove_preset" role="menuitem">Remove Preset</button>
+          </div>
+        </div>
+        <button id="send-btn" class="icon-btn btn-primary" title="Send">
+          <img src="../icons/send.svg" alt="Send" width="24" height="24" />
+        </button>
       </div>
     </footer>
   </div>
