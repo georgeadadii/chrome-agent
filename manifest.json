@@ -6,11 +6,11 @@
   "permissions": ["contextMenus", "storage", "scripting", "activeTab", "tabs", "sidePanel"],
   "host_permissions": ["https://api.openai.com/*"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background/background.js"
   },
   "action": {},
   "side_panel": {
-    "default_path": "sidepanel.html"
+    "default_path": "src/sidepanel/sidepanel.html"
   },
-  "options_page": "options.html"
+  "options_page": "src/settings/settings.html"
 }
