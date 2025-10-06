@@ -81,24 +81,31 @@ function handleAction(action, overrideText) {
   chrome.runtime.sendMessage({ type: 'RUN_FROM_SIDEPANEL', action, text });
 
   function onMessage(msg) {
+    console.log('Received message:', msg);
     if (msg?.type === 'SOLO_RESULT') {
       if (loadingEl && loadingEl.parentNode) {
-        loadingEl.classList.remove('loading');
-        loadingEl.textContent = (msg.output || '').trim();
-        loadingEl.classList.remove('fade-in');
-        void loadingEl.offsetWidth;
-        loadingEl.classList.add('fade-in');
+        loadingEl.remove();
       }
+      const aiDiv = document.createElement('div');
+      aiDiv.className = 'message ai-message fade-in';
+
+      const markdownHTML = marked.parse((msg.output || '').trim());
+      aiDiv.innerHTML = markdownHTML;
+
+      chatArea.appendChild(aiDiv);
+
+      chatArea.scrollTop = chatArea.scrollHeight;
       chrome.runtime.onMessage.removeListener(onMessage);
-    } else if (msg?.type === 'SOLO_ERROR') {
-      if (loadingEl && loadingEl.parentNode) {
-        loadingEl.classList.remove('loading');
-        loadingEl.classList.add('error');
-        loadingEl.textContent = 'ERROR: ' + msg.message;
-        loadingEl.classList.remove('fade-in');
-        void loadingEl.offsetWidth;
-        loadingEl.classList.add('fade-in');
-      }
+    }
+    else if (msg?.type === 'SOLO_ERROR') {
+      if (loadingEl && loadingEl.parentNode) loadingEl.remove();
+
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'ai-summary error fade-in';
+      errorDiv.innerHTML = `<strong>Error:</strong> ${msg.message}`;
+      chatArea.appendChild(errorDiv);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
       chrome.runtime.onMessage.removeListener(onMessage);
     }
   }
@@ -169,7 +176,7 @@ userInput.addEventListener('keydown', (e) => {
     const start = userInput.selectionStart;
     const end = userInput.selectionEnd;
     if ((e.key === 'Backspace' && start <= prefixLen && start === end) ||
-        (e.key === 'ArrowLeft' && start <= prefixLen)) {
+      (e.key === 'ArrowLeft' && start <= prefixLen)) {
       e.preventDefault();
       userInput.selectionStart = userInput.selectionEnd = prefixLen;
     }
