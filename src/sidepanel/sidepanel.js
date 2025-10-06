@@ -134,7 +134,7 @@ if (presetBtn) {
   });
 }
 
-xif (presetMenu) {
+if (presetMenu) {
   presetMenu.addEventListener('click', (e) => {
     const target = e.target;
     if (target && target.matches('.dropdown-item')) {
